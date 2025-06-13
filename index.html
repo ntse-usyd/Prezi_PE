@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Presenter's Google Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #qrcode {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Presenter's Google Form</h1>
+  <input type="text" id="text" placeholder="Enter text or number...">
+  <button onclick="generateQRCode()">Generate QR Code</button>
+  <div id="qrcode"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    let qrcode;
+    const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdegnKpbRJ1BixR4OgyI1eEssW-0aDNwXRiZS2GNSBOXKgxLw/viewform?usp=pp_url&entry.304395758=";
+
+    function generateQRCode() {
+      const container = document.getElementById("qrcode");
+      const input = document.getElementById("text").value;
+
+      // Clear previous QR code if exists
+      container.innerHTML = "";
+
+      if (!input) return;
+
+      const fullUrl = baseUrl + encodeURIComponent(input);
+
+      qrcode = new QRCode(container, {
+        text: fullUrl,
+        width: 256,
+        height: 256,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  </script>
+</body>
+</html>
